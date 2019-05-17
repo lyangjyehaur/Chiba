@@ -200,4 +200,4 @@ function del_mediaelement() {
         wp_deregister_script( 'mediaelement' );
 }
 
-?>
+add_filter('show_admin_bar', '__return_false');

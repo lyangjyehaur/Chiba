@@ -24,14 +24,14 @@
         <div title="播放/暂停" data-id="<?php the_ID() ?>" class="icon-play"></div>
         <div title="查看壁纸" class="icon-images"></div>
 		<h3 class="subtitle"><?php the_title(); ?></h3>
-        <div class="social">
-            <div class="like-icon">
-		        <?php tz_printLikes(get_the_ID()); ?>
-            </div><!--
-         --><div>
-		        <?php get_template_part( 'social' ); ?>
-            </div>
-        </div>
+<!--        <div class="social">-->
+<!--            <div class="like-icon">-->
+		        <?php //tz_printLikes(get_the_ID()); ?>
+<!--            </div>-->
+<!--         <div>-->
+		        <?php //get_template_part( 'social' ); ?>
+<!--            </div>-->
+<!--        </div>-->
         <div class="scrollbar"></div>
     </div>
 
@@ -59,7 +59,7 @@
             <span>阅读 <?php echo getPostViews(get_the_ID()); ?></span>
             <span>字数 <?php echo count_words ($text); ?></span>
             <span>评论 <?php comments_number( '0', '1', '%' ); ?></span>
-            <span>喜欢 <?php tz_printLikes(get_the_ID()); ?></span>
+<!--            <span>喜欢 --><?php //tz_printLikes(get_the_ID()); ?><!--</span>-->
         </div>
 
         <div class="content">
