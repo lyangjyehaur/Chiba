@@ -56,7 +56,7 @@ html.loading, body.loading {
 }
 
 body {
-    font-family: "Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+    /*font-family: "Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;*/
     font-size: 14px;
 }
 a, a:hover {
@@ -75,11 +75,11 @@ audio {
     height: 0;
 }
 
-#screen {
+.screen {
     position: relative;
 }
 
-#mark {
+.mark {
     width: 100%;
     height: 560px;
     overflow: hidden;
@@ -87,15 +87,16 @@ audio {
 .layer {
     position: relative;
 }
-#cover {
+.cover {
     position: absolute;
     max-width: none;
 }
 
 #header {
-    position: absolute;
+    position: fixed;
     top: 70px;
     width: 100%;
+    z-index: -1;
 }
 #header > div {
     margin: 0 60px;
@@ -132,7 +133,7 @@ audio {
     width: 62px;
     height: 26px;
 }
-#vibrant {
+.vibrant {
     position: absolute;
     top: 0;
     left: 0;
@@ -148,24 +149,24 @@ audio {
 /*    opacity: 0;*/
 /*    background-color: #000;*/
 /*}*/
-#post0 {
+.first-post {
     width: 28%;
     position: absolute;
     top: 42%;
     left: 10%;
 }
-#post0 p:first-child {
+.first-post p:first-child {
     color: #fff;
     font-size: 12px;
 }
-#post0 h2 {
+.first-post h2 {
     font-size: 28px;
     margin-top: 15px;
 }
-#post0 h2 a {
+.first-post h2 a {
     color: #fff;
 }
-#post0 h2 + p {
+.first-post h2 + p {
     color: #fff;
     font-size: 14px;
     margin-top: 30px;
@@ -1022,10 +1023,10 @@ ol.children li {
         width: 900px;
         margin: 0 auto;
     }
-    #post0 {
+    .first-post {
         width: 32%;
     }
-    #post0 h2 {
+    .first-post h2 {
         font-size: 24px;
     }
     .post {
@@ -1063,7 +1064,7 @@ ol.children li {
     }
 }
 @media screen and (max-width: 900px) {
-    #mark {
+    .mark {
         height: 480px;
     }
     #header > div {
@@ -1074,10 +1075,10 @@ ol.children li {
         -moz-transform: translateX(-10%);
         -webkit-transform: translateX(-10%);
     }
-    #post0 {
+    .first-post {
         width: 40%;
     }
-    #post0 h2 {
+    .first-post h2 {
         font-size: 20px;
     }
     .post {
@@ -1132,7 +1133,7 @@ ol.children li {
     #container {
         padding-bottom: 50px;
     }
-    #post0 {
+    .first-post {
         bottom: 60px;
         top: auto;
         width: 70%;

@@ -235,6 +235,12 @@ var Diaspora = {
 
 $(function() {
 
+    $('#container').fullpage({
+        sectionSelector: '.screen'
+    });
+
+    // $('body').css('height','auto');
+
     if (Diaspora.P()) {
         $('body').addClass('touch')
     }
@@ -242,12 +248,14 @@ $(function() {
     if ($('#preview').length) {
 
         var cover = {};
-        cover.t = $('#cover');
+        cover.t = $('.cover');
         cover.w = cover.t.attr('width');
         cover.h = cover.t.attr('height');
+        var coverCount = 0;
+        //console.log(cover);
 
         ;(cover.o = function() {
-            $('#mark').height(window.innerHeight)
+            $('.mark').height(window.innerHeight)
         })();
 
         if (cover.t.prop('complete')) {
@@ -259,7 +267,7 @@ $(function() {
 
             ;(cover.f = function() {
 
-                var _w = $('#mark').width(), _h = $('#mark').height(), x, y, i, e;
+                var _w = $('.mark').width(), _h = $('.mark').height(), x, y, i, e;
 
                 e = (_w >= 1000 || _h >= 1000) ? 1000 : 500;
 
@@ -284,23 +292,25 @@ $(function() {
                     cover.w = cover.t.width();
                     cover.h = cover.t.height();
                 }
-
-                Diaspora.F($('#cover')[0], cover.w, cover.h)
+                //console.log($('.cover'));
+                Diaspora.F($('.cover')[coverCount], cover.w, cover.h);
+                coverCount++;
 
             })();
 
             setTimeout(function() {
-                $('html, body').removeClass('loading')
+                $('html, body').removeClass('loading').css('height','auto');
+                $('#header').css('z-index','100');
             }, 1000)
 
-            $('#mark').parallax()
+            $('.mark').parallax()
 
             var vibrant = new Vibrant(cover.t[0]);
             var swatches = vibrant.swatches()
 
             if (swatches['DarkVibrant']) {
-                $('#vibrant polygon').css('fill', swatches['DarkVibrant'].getHex())
-                $('#vibrant div').css('background-color', swatches['DarkVibrant'].getHex())
+                $('.vibrant polygon').css('fill', swatches['DarkVibrant'].getHex())
+                $('.vibrant div').css('background-color', swatches['DarkVibrant'].getHex())
             }
             if (swatches['Vibrant']) {
                 $('.icon-menu').css('color', swatches['Vibrant'].getHex())
@@ -332,6 +342,7 @@ $(function() {
                     Diaspora.loading()
                 }
             }, 500)
+
         })  
 
     } else {
@@ -604,5 +615,7 @@ $(function() {
     })
 
     console.log("%c Github %c","background:#24272A; color:#ffffff","","https://github.com/LoeiFy/Diaspora")
+
+
 
 })
