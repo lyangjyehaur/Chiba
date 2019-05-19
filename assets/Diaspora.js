@@ -251,8 +251,6 @@ $(function() {
         cover.t = $('.cover');
         cover.w = cover.t.attr('width');
         cover.h = cover.t.attr('height');
-        var coverCount = 0;
-        //console.log(cover);
 
         ;(cover.o = function() {
             $('.mark').height(window.innerHeight)
@@ -264,9 +262,7 @@ $(function() {
         }
 
         cover.t.on('load', function() {
-
-            ;(cover.f = function() {
-
+            (cover.f = function() {
                 var _w = $('.mark').width(), _h = $('.mark').height(), x, y, i, e;
 
                 e = (_w >= 1000 || _h >= 1000) ? 1000 : 500;
@@ -292,10 +288,9 @@ $(function() {
                     cover.w = cover.t.width();
                     cover.h = cover.t.height();
                 }
-                //console.log($('.cover'));
-                Diaspora.F($('.cover')[coverCount], cover.w, cover.h);
-                coverCount++;
-
+                for(i = 0;i< cover.t.size();i++) {
+                    Diaspora.F($('.cover')[i], cover.w, cover.h);
+                }
             })();
 
             setTimeout(function() {
@@ -305,17 +300,19 @@ $(function() {
 
             $('.mark').parallax()
 
-            var vibrant = new Vibrant(cover.t[0]);
-            var swatches = vibrant.swatches()
 
-            if (swatches['DarkVibrant']) {
-                $('.vibrant polygon').css('fill', swatches['DarkVibrant'].getHex())
-                $('.vibrant div').css('background-color', swatches['DarkVibrant'].getHex())
-            }
-            if (swatches['Vibrant']) {
-                $('.icon-menu').css('color', swatches['Vibrant'].getHex())
-            }
+            for(i = 0;i< cover.t.size();i++) {
+                var vibrant = new Vibrant(cover.t[i]);
+                var swatches = vibrant.swatches()
 
+                if (swatches['DarkVibrant']) {
+                    $('.screen:eq('+i+') polygon').css('fill', swatches['DarkVibrant'].getHex())
+                    //$('.screen:eq('+i+') div').css('background-color', swatches['DarkVibrant'].getHex())
+                }
+                if (swatches['Vibrant']) {
+                    $('.icon-menu').css('color', swatches['Vibrant'].getHex())
+                }
+            }
         })
 
         if (!cover.t.attr('src')) {

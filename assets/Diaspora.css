@@ -172,6 +172,15 @@ audio {
     margin-top: 30px;
 }
 
+.right-post{
+    right: 10%!important;
+    left: auto!important;
+}
+
+.right-post h2, .right-post p{
+    text-align: right;
+}
+
 .post {
     margin: 100px auto 0; 
     width: 1200px;
@@ -1070,7 +1079,7 @@ ol.children li {
     #header > div {
         width: 90%;
     }
-    #vibrant polygon {
+    .vibrant polygon {
         transform: translateX(-10%);
         -moz-transform: translateX(-10%);
         -webkit-transform: translateX(-10%);
@@ -1124,7 +1133,7 @@ ol.children li {
     #header {
         top: 40px;
     }
-    #vibrant svg {
+    .vibrant svg {
         display: none;
     }
     /*#vibrant div {*/

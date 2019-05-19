@@ -1,4 +1,4 @@
 <?php
-define ('USE_TIMTHUMB', false);
+define ('USE_TIMTHUMB', true);
 define ('LOGO_FONT', false);
 ?>
