@@ -438,12 +438,13 @@ $(function() {
                     }
                     
                     var tempScrollTop = $(window).scrollTop();
-                    $('#primary').append($(data).find('.post'))
+                    $('#container').append($(data).find('.screen'))
                     $(window).scrollTop(tempScrollTop);
                     Diaspora.loaded()
                     $('html,body').animate({ scrollTop: tempScrollTop + 400 }, 500);
                 }, function() {
                     tag.html('加载更多').data('status', 'loaded')
+                    fullpage_api.reBuild();
                 })
 
                 return false;

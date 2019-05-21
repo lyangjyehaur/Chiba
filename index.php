@@ -12,7 +12,7 @@
     </div></div>
 <div id="container">
 
-    <?php if (have_posts()) : $count = 0;  while (have_posts()) : the_post(); $count++; if( $count <= 1 ): ?>
+    <?php if (have_posts()) : $count = 0;  while (have_posts()) : the_post(); $count++;  ?>
 
     <?php
 
@@ -46,12 +46,12 @@
             </div>
         </div>
 
-        <div class="vibrant">
-            <svg viewBox="0 0 2880 1620" height="100%" preserveAspectRatio="xMaxYMax slice">
-                <polygon opacity="0.7" points="2000,1620 0,1620 0,0 600,0 "/>
-            </svg>
-            <div></div>
-        </div>
+<!--        <div class="vibrant">-->
+<!--            <svg viewBox="0 0 2880 1620" height="100%" preserveAspectRatio="xMaxYMax slice">-->
+<!--                <polygon opacity="0.7" points="2000,1620 0,1620 0,0 600,0 "/>-->
+<!--            </svg>-->
+<!--            <div></div>-->
+<!--        </div>-->
 
         <div class="first-post">
             <p><?php the_time('F j, Y'); ?></p>
@@ -61,94 +61,7 @@
     </div>
 
 
-
-
-
-<!--    <div style="display: none;">-->
-<!--        --><?php //get_template_part( 'post' ); ?>
-<!--    </div>-->
-
-<!--    <div id="primary">-->
-
-    <?php else : ?>
-
-    <?php //get_template_part( 'post' ); ?>
-
-	    <?php
-
-	    if (!has_post_thumbnail()) {
-
-		    $attachments = get_posts(array(
-			    'post_type' => 'attachment',
-			    'post_mime_type'=>'image',
-			    'posts_per_page' => 0,
-			    'post_parent' => $post->ID,
-			    'order'=>'ASC'
-		    ));
-
-		    if ($attachments) {
-			    $img = wp_get_attachment_image_src( $attachments[0]->ID, false );
-		    } else {
-			    $img[0] = get_template_directory_uri() .'/images/default.jpg';
-		    }
-
-	    } else {
-
-		    if (USE_TIMTHUMB) {
-			    $img = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'full');
-		    } else {
-			    $img = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'cover');
-		    }
-
-	    }
-	    ?>
-
-
-
-        <div class="screen" id="screen-<?php the_ID() ?>">
-            <div class="mark">
-                <div class="layer" data-depth="0.4">
-	                <?php if (USE_TIMTHUMB): ?>
-                        <img class="cover" crossorigin="anonymous" src="<?php echo get_template_directory_uri(); ?>/timthumb/timthumb.php?src=<?php echo $img[0] ?>" width="<?php echo $cover[1] ?>" height="<?php echo $cover[2] ?>"/>
-
-	                <?php else: ?>
-
-                        <img class="cover" crossorigin="anonymous" src="<?php echo $img[0] ?>" width="<?php echo $cover[1] ?>" height="<?php echo $cover[2] ?>"/>
-
-	                <?php endif; ?>
-                </div>
-            </div>
-	        <?php if($count%2==0): ?>
-                <div class="vibrant">
-                    <svg viewBox="0 0 2880 1620" height="100%" width="100%" style="transform:rotateY(180deg)" preserveAspectRatio="xMaxYMax slice">
-                        <polygon opacity="0.7" points="2000,1620 0,1620 0,0 600,0 "/>
-                    </svg>
-                    <div></div>
-                </div>
-
-                <div class="first-post right-post">
-                    <p><?php the_time('F j, Y'); ?></p>
-                    <h2><a data-id="<?php the_ID() ?>" class="posttitle" href="<?php the_permalink(); ?>" /><?php the_title(); ?></a></h2>
-                    <p><?php echo wp_trim_words( get_the_content(), 100, '...' ); ?></p>
-                </div>
-            <?php else: ?>
-                <div class="vibrant">
-                    <svg viewBox="0 0 2880 1620" height="100%" width="100%"  preserveAspectRatio="xMaxYMax slice">
-                        <polygon opacity="0.7" points="2000,1620 0,1620 0,0 600,0 "/>
-                    </svg>
-                    <div></div>
-                </div>
-
-                <div class="first-post">
-                    <p><?php the_time('F j, Y'); ?></p>
-                    <h2><a data-id="<?php the_ID() ?>" class="posttitle" href="<?php the_permalink(); ?>" /><?php the_title(); ?></a></h2>
-                    <p><?php echo wp_trim_words( get_the_content(), 100, '...' ); ?></p>
-                </div>
-            <?php endif; ?>
-        </div>
-
-
-    <?php endif; endwhile; endif; ?>
+    <?php endwhile; endif; ?>
 
 <!--    </div>-->
 
