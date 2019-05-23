@@ -55,18 +55,13 @@
 
         <div class="first-post">
             <p><?php the_time('F j, Y'); ?></p>
-            <h2><a data-id="<?php the_ID() ?>" class="posttitle" href="<?php the_permalink(); ?>" /><?php the_title(); ?></a></h2>
+            <h2><a data-id="<?php the_ID() ?>" class="posttitle" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
             <p><?php echo wp_trim_words( get_the_content(), 100, '...' ); ?></p>
         </div>
     </div>
-
-
     <?php endwhile; endif; ?>
 
-<!--    </div>-->
-
-    <div id="pager"><?php next_posts_link(('加载更多')); ?></div>
-
+    <div class="screen footer fp-auto-height"><div id="pager"><?php next_posts_link(('加载更多')); ?></div></div>
 </div>
 <div id="preview" class="trans"></div>
 

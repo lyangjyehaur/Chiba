@@ -101,7 +101,10 @@ audio {
 #header > div {
     margin: 0 60px;
     position: relative;
-} 
+}
+.headerShow {
+    z-index: 100!important;
+}
 .icon-menu {
     font-size: 20px;
     padding: 6px 6px 5px;
@@ -275,15 +278,19 @@ audio {
 .here .likeThis.active .icon-like {
     color: #999;
 }
-
+.footer{
+    height: 60px!important;
+}
 #pager {
     text-align: center;
-    margin: 70px 0 0;
-    position: fixed;
-    z-index: 100;
-    bottom: 200px;
+    /* position: fixed; */
+    /* z-index: 100; */
+    /* bottom: 200px; */
+    height: 60px;
 }
 #pager a {
+    margin: 9px 0 0 0;
+    display: inline-block;
     font-size: 14px;
     letter-spacing: 5px;
     color: #666;
@@ -1157,9 +1164,9 @@ ol.children li {
     .menu li {
         font-size: 16px;
     }
-    #pager {
-        margin: 30px 0 0;
-    }
+    /*#pager {*/
+    /*    margin: 30px 0 0;*/
+    /*}*/
 
     .article > div {
         width: 90%;

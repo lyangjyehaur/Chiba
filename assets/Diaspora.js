@@ -3,6 +3,16 @@
  * @author LoeiFy
  * @url http://lorem.in
  */
+var currentScreen = 0;
+function initialization(){
+    var chibaFullpage = new fullpage('#container', {
+        sectionSelector: '.screen',
+        scrollBar: true,
+        css3: true,
+        scrollingSpeed: 1000
+    });
+}
+
 
 var Home = location.href,
     Pages = 4,
@@ -60,13 +70,16 @@ var Diaspora = {
             if (state.u == Home) {
                 $('#preview').css('position', 'fixed')
                 setTimeout(function() {
-                    $('#preview').removeClass('show').addClass('trans')
+                    initialization();
+                    $('#preview').removeClass('show').addClass('trans');
+                    $('#header').addClass('headerShow');
                     $('#container').show()
                     window.scrollTo(0, parseInt($('#container').data('scroll')))
                     setTimeout(function() {
                         $('#preview').html('')
                         $(window).trigger('resize')
                     }, 300)
+                    fullpage_api.silentMoveTo(currentScreen+1);
                 }, 0)
             } else {
                 Diaspora.loading()
@@ -74,12 +87,11 @@ var Diaspora = {
                 Diaspora.L(state.u, function(data) {
 
                     document.title = state.t;
-
+                    //currentScreen = fullpage_api.getActiveSection().index;
                     $('#preview').html($(data).filter('#single'))
-
-                    Diaspora.preview()
-
-                    setTimeout(function() { Diaspora.player(state.d) }, 0)
+                    Diaspora.preview();
+                    setTimeout(function() { Diaspora.player(state.d) }, 0);
+                    //fullpage_api.destroy('all');
                 })
             }
 
@@ -90,6 +102,7 @@ var Diaspora = {
         var id = tag.data('id') || 0,
             url = tag.attr('href'),
             title = tag.attr('title') || tag.text();
+
 
         if (!$('#preview').length || !(window.history && history.pushState)) location.href = url;
 
@@ -117,8 +130,9 @@ var Diaspora = {
             }
 
             document.title = title;
-
+            currentScreen = fullpage_api.getActiveSection().index;
             $('#preview').html($(data).filter('#single'))
+
 
             switch (flag) {
 
@@ -167,6 +181,8 @@ var Diaspora = {
 
                     Diaspora.loaded()
                 }, 500)
+                $('#header').removeClass('headerShow');
+                fullpage_api.destroy('all');
             }, 300)
         }, 0)
     },
@@ -235,11 +251,8 @@ var Diaspora = {
 
 $(function() {
 
-    $('#container').fullpage({
-        sectionSelector: '.screen'
-    });
-
     // $('body').css('height','auto');
+    initialization();
 
     if (Diaspora.P()) {
         $('body').addClass('touch')
@@ -252,7 +265,7 @@ $(function() {
         cover.w = cover.t.attr('width');
         cover.h = cover.t.attr('height');
 
-        ;(cover.o = function() {
+        (cover.o = function() {
             $('.mark').height(window.innerHeight)
         })();
 
@@ -295,8 +308,10 @@ $(function() {
 
             setTimeout(function() {
                 $('html, body').removeClass('loading').css('height','auto');
-                $('#header').css('z-index','100');
+                $('#header').addClass('headerShow');
             }, 1000)
+
+            $(canvas).remove();
 
             $('.mark').parallax()
 
@@ -434,17 +449,92 @@ $(function() {
                         tag.attr('href', link).html('加载更多').data('status', 'loaded')
                         tag.data('page', parseInt(tag.data('page')) + 1)
                     } else {
-                        $('#pager').remove()
+                        $('#pager').parent().parent().remove();
+
                     }
                     
                     var tempScrollTop = $(window).scrollTop();
                     $('#container').append($(data).find('.screen'))
+                    fullpage_api.destroy('all');
+                    initialization();
+                    var cover = {};
+                    cover.t = $('.cover');
+                    cover.w = cover.t.attr('width');
+                    cover.h = cover.t.attr('height');
+
+                    (cover.o = function() {
+                        $('.mark').height(window.innerHeight)
+                    })();
+
+                    if (cover.t.prop('complete')) {
+                        // why setTimeout ?
+                        setTimeout(function() { cover.t.load() }, 0)
+                    }
+
+                    cover.t.on('load', function() {
+                        (cover.f = function() {
+                            var _w = $('.mark').width(), _h = $('.mark').height(), x, y, i, e;
+
+                            e = (_w >= 1000 || _h >= 1000) ? 1000 : 500;
+
+                            if (_w >= _h) {
+                                i = _w / e * 50;
+                                y = i;
+                                x = i * _w / _h;
+                            } else {
+                                i = _h / e * 50;
+                                x = i;
+                                y = i * _h / _w;
+                            }
+
+                            $('.layer').css({
+                                'width': _w + x,
+                                'height': _h + y,
+                                'marginLeft': - 0.5 * x,
+                                'marginTop': - 0.5 * y
+                            })
+
+                            if (!cover.w) {
+                                cover.w = cover.t.width();
+                                cover.h = cover.t.height();
+                            }
+                            for(i = 0;i< cover.t.size();i++) {
+                                Diaspora.F($('.cover')[i], cover.w, cover.h);
+                            }
+                        })();
+
+                        setTimeout(function() {
+                            $('html, body').removeClass('loading').css('height','auto');
+                            $('#header').css('z-index','100');
+                        }, 1000)
+
+                        $('.mark').parallax()
+
+
+                        for(i = 0;i< cover.t.size();i++) {
+                            var vibrant = new Vibrant(cover.t[i]);
+                            var swatches = vibrant.swatches()
+
+                            if (swatches['DarkVibrant']) {
+                                $('.screen:eq('+i+') polygon').css('fill', swatches['DarkVibrant'].getHex())
+                                //$('.screen:eq('+i+') div').css('background-color', swatches['DarkVibrant'].getHex())
+                            }
+                            if (swatches['Vibrant']) {
+                                $('.icon-menu').css('color', swatches['Vibrant'].getHex())
+                            }
+                        }
+                    })
+
+                    if (!cover.t.attr('src')) {
+                        alert('Please set the post thumbnail')
+                    }
+                    fullpage_api.reBuild();
                     $(window).scrollTop(tempScrollTop);
                     Diaspora.loaded()
                     $('html,body').animate({ scrollTop: tempScrollTop + 400 }, 500);
                 }, function() {
                     tag.html('加载更多').data('status', 'loaded')
-                    fullpage_api.reBuild();
+                    $(canvas).remove();
                 })
 
                 return false;
