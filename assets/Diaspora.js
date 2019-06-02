@@ -9,7 +9,7 @@ function initialization(){
         sectionSelector: '.screen',
         scrollBar: true,
         css3: true,
-        scrollingSpeed: 1000
+        scrollingSpeed: 500
     });
 }
 
@@ -99,71 +99,73 @@ var Diaspora = {
     },
 
     HS: function(tag, flag) {
-        var id = tag.data('id') || 0,
-            url = tag.attr('href'),
-            title = tag.attr('title') || tag.text();
+        if(tag.prop('tagName') == 'A') {
+            var id = tag.data('id') || 0,
+                url = tag.attr('href'),
+                title = tag.attr('title') || tag.text();
 
 
-        if (!$('#preview').length || !(window.history && history.pushState)) location.href = url;
+            if (!$('#preview').length || !(window.history && history.pushState)) location.href = url;
 
-        Diaspora.loading()
+            Diaspora.loading()
 
-        var state = {d: id, t: title, u: url};
+            var state = {d: id, t: title, u: url};
 
-        Diaspora.L(url, function(data) {
+            Diaspora.L(url, function (data) {
 
-            if (!$(data).filter('#single').length) {
-                location.href = url;
-                return
-            }
-
-            switch (flag) {
-
-                case 'push':
-                    history.pushState(state, title, url)
-                break;
-
-                case 'replace':
-                    history.replaceState(state, title, url)
-                break;
-
-            }
-
-            document.title = title;
-            currentScreen = fullpage_api.getActiveSection().index;
-            $('#preview').html($(data).filter('#single'))
-
-
-            switch (flag) {
-
-                case 'push': 
-                    Diaspora.preview()
-                break;
-
-                case 'replace':
-                    window.scrollTo(0, 0)
-                    Diaspora.loaded()
-                break;
-            }
-
-            setTimeout(function() {
-                if (!id) id = $('.icon-play').data('id');
-                Diaspora.player(id)
-
-                // get download link
-                $('.content img').each(function() {
-                    if ($(this).attr('src').indexOf('/uploads/2014/downloading.png') > -1) {
-                        $(this).hide()
-                        $('.downloadlink').attr('href', $(this).parent().attr('href'))
-                    }
-                })
-
-                if (flag == 'replace') {
-                    $('#top').show()
+                if (!$(data).filter('#single').length) {
+                    location.href = url;
+                    return
                 }
-            }, 0)
 
-        })
+                switch (flag) {
+
+                    case 'push':
+                        history.pushState(state, title, url)
+                        break;
+
+                    case 'replace':
+                        history.replaceState(state, title, url)
+                        break;
+
+                }
+
+                document.title = title;
+                currentScreen = fullpage_api.getActiveSection().index;
+                $('#preview').html($(data).filter('#single'))
+
+
+                switch (flag) {
+
+                    case 'push':
+                        Diaspora.preview()
+                        break;
+
+                    case 'replace':
+                        window.scrollTo(0, 0)
+                        Diaspora.loaded()
+                        break;
+                }
+
+                setTimeout(function () {
+                    if (!id) id = $('.icon-play').data('id');
+                    Diaspora.player(id)
+
+                    // get download link
+                    $('.content img').each(function () {
+                        if ($(this).attr('src').indexOf('/uploads/2014/downloading.png') > -1) {
+                            $(this).hide()
+                            $('.downloadlink').attr('href', $(this).parent().attr('href'))
+                        }
+                    })
+
+                    if (flag == 'replace') {
+                        $('#top').show()
+                    }
+                }, 0)
+
+            })
+        }
     },
 
     preview: function() {
@@ -311,9 +313,11 @@ $(function() {
                 $('#header').addClass('headerShow');
             }, 1000)
 
-            $(canvas).remove();
+            if($('canvas')){
+                $('canvas').remove();
+            }
 
-            $('.mark').parallax()
+            $('.mark').parallax();
 
 
             for(i = 0;i< cover.t.size();i++) {
